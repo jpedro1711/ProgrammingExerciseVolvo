@@ -1,4 +1,4 @@
-﻿using FleetManager.Domain.Entities;
+﻿using FleetManager.Domain.Entities.Owned;
 using System.ComponentModel.DataAnnotations;
 
 namespace FleetManager.Application.Requests

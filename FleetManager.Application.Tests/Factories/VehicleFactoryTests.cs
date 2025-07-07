@@ -2,6 +2,7 @@
 using FleetManager.Application.Requests;
 using FleetManager.Domain.Entities;
 using FleetManager.Domain.Enums;
+using FleetManager.Domain.Entities.Owned;
 
 namespace FleetManager.Application.Tests.Factories
 {

@@ -2,7 +2,6 @@
 using FleetManager.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Reflection.Emit;
 
 namespace FleetManager.Infrastructure.Configurations
 {
@@ -10,15 +9,9 @@ namespace FleetManager.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Vehicle> builder)
         {
+            builder.OwnsOne(v => v.ChassisId, chassisId => chassisId.HasIndex(c => new { c.ChassisSeries, c.ChassisNumber }).IsUnique());
+
             builder.HasKey(v => new { v.ChassisSeries, v.ChassisNumber });
-
-            builder.Property(v => v.ChassisSeries)
-                .IsRequired()
-                .HasMaxLength(50);
-
-            builder.Property(v => v.ChassisNumber)
-                .IsRequired()
-                .HasMaxLength(50);
 
             builder
             .HasDiscriminator<VehicleType>("VehicleType")
@@ -26,6 +19,8 @@ namespace FleetManager.Infrastructure.Configurations
                 .HasValue<Car>(VehicleType.Car)
                 .HasValue<Truck>(VehicleType.Truck)
                 .HasValue<Bus>(VehicleType.Bus);
+
+            builder.Ignore(v => v.ChassisId);
         }
     }
 }

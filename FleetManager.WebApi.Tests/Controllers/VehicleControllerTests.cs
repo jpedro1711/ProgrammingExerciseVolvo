@@ -2,6 +2,7 @@
 using FleetManager.Application.Interfaces.Services;
 using FleetManager.Application.Requests;
 using FleetManager.Domain.Entities;
+using FleetManager.Domain.Entities.Owned;
 using FleetManager.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -26,7 +27,7 @@ namespace FleetManager.WebApi.Tests.Controllers
         {
             var request = _fixture.Create<EditVehicleRequest>();
             var chassisSeries = _fixture.Create<string>();
-            var chassisNumber = _fixture.Create<int>();
+            var chassisNumber = _fixture.Create<uint>();
             var updatedVehicle = _fixture.Create<Truck>();
             _vehicleServiceMock.Setup(s => s.Update(request, It.IsAny<ChassisId>())).ReturnsAsync(updatedVehicle);
 
@@ -40,7 +41,7 @@ namespace FleetManager.WebApi.Tests.Controllers
         public async Task GetByChassisId_ReturnsOk_WhenVehicleExists()
         {
             var chassisSeries = _fixture.Create<string>();
-            var chassisNumber = _fixture.Create<int>();
+            var chassisNumber = _fixture.Create<uint>();
             var vehicle = _fixture.Create<Truck>();
             _vehicleServiceMock.Setup(s => s.GetByChassisId(It.IsAny<GetVehicleByChassisIdRequest>())).ReturnsAsync(vehicle);
 
@@ -54,7 +55,7 @@ namespace FleetManager.WebApi.Tests.Controllers
         public async Task GetByChassisId_ReturnsNotFound_WhenVehicleDoesNotExist()
         {
             var chassisSeries = _fixture.Create<string>();
-            var chassisNumber = _fixture.Create<int>();
+            var chassisNumber = _fixture.Create<uint>();
             _vehicleServiceMock.Setup(s => s.GetByChassisId(It.IsAny<GetVehicleByChassisIdRequest>())).ReturnsAsync((Truck)null);
 
             var result = await _controller.GetByChassisId(chassisSeries, chassisNumber);

@@ -1,6 +1,6 @@
 ﻿using FleetManager.Application.Interfaces.Services;
 using FleetManager.Application.Requests;
-using FleetManager.Domain.Entities;
+using FleetManager.Domain.Entities.Owned;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FleetManager.WebApi.Controllers
@@ -31,7 +31,7 @@ namespace FleetManager.WebApi.Controllers
         /// <param name="request">The updated vehicle data.</param>
         /// <returns>The updated vehicle.</returns>
         [HttpPut("{chassisSeries}/{chassisNumber}")]
-        public async Task<IActionResult> UpdateVehicle(string chassisSeries, int chassisNumber, [FromBody] EditVehicleRequest request)
+        public async Task<IActionResult> UpdateVehicle(string chassisSeries, uint chassisNumber, [FromBody] EditVehicleRequest request)
         {
             var updatedVehicle = await vehicleService.Update(request, BuildChassisId(chassisSeries, chassisNumber));
             return Ok(updatedVehicle);
@@ -44,7 +44,7 @@ namespace FleetManager.WebApi.Controllers
         /// <param name="chassisNumber">The chassis number of the vehicle.</param>
         /// <returns>The vehicle matching the provided chassis ID, or 404 if not found.</returns>
         [HttpGet("{chassisSeries}/{chassisNumber}")]
-        public async Task<IActionResult> GetByChassisId(string chassisSeries, int chassisNumber)
+        public async Task<IActionResult> GetByChassisId(string chassisSeries, uint chassisNumber)
         {
             var vehicle = await vehicleService.GetByChassisId(new GetVehicleByChassisIdRequest
             {
@@ -67,7 +67,7 @@ namespace FleetManager.WebApi.Controllers
             return Ok(vehicles);
         }
 
-        private static ChassisId BuildChassisId(string chassisSeries, int chassisNumber) =>
+        private static ChassisId BuildChassisId(string chassisSeries, uint chassisNumber) =>
             new(chassisSeries, chassisNumber);
     }
 }

@@ -3,6 +3,7 @@ using FleetManager.Infrastructure.Database;
 using FleetManager.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.MsSql;
+using FleetManager.Domain.Entities.Owned;
 
 namespace FleetManager.Infrastructure.Tests.Repositories
 {
@@ -47,12 +48,12 @@ namespace FleetManager.Infrastructure.Tests.Repositories
             var result = await _repository.Insert(vehicle);
 
             Assert.NotNull(result);
-            Assert.Equal("a", result.ChassisSeries);
-            Assert.Equal(1, result.ChassisNumber);
+            Assert.Equal("a", result.ChassisId.ChassisSeries);
+            Assert.Equal(vehicle.ChassisId.ChassisNumber, result.ChassisId.ChassisNumber);
             Assert.Equal("blue", result.Color);
 
             var dbVehicle = await _dbContext.Vehicles
-                .FirstOrDefaultAsync(v => v.ChassisSeries == "a" && v.ChassisNumber == 1);
+                .SingleOrDefaultAsync(v => v.ChassisSeries == "a" && v.ChassisNumber == 1);
 
             Assert.NotNull(dbVehicle);
         }
@@ -83,8 +84,8 @@ namespace FleetManager.Infrastructure.Tests.Repositories
             var result = await _repository.GetByChassisId(chassisId);
 
             Assert.NotNull(result);
-            Assert.Equal("a", result.ChassisSeries);
-            Assert.Equal(1, result.ChassisNumber);
+            Assert.Equal(vehicle.ChassisId.ChassisSeries, result.ChassisId.ChassisSeries);
+            Assert.Equal(vehicle.ChassisId.ChassisNumber, result.ChassisId.ChassisNumber);
         }
 
         [Fact]
@@ -100,7 +101,7 @@ namespace FleetManager.Infrastructure.Tests.Repositories
             Assert.Equal("White", updated.Color);
 
             var dbVehicle = await _dbContext.Vehicles
-                .FirstOrDefaultAsync(v => v.ChassisSeries == "a" && v.ChassisNumber == 1);
+                .SingleOrDefaultAsync(v => v.ChassisSeries == "a" && v.ChassisNumber == 1);
 
             Assert.Equal("White", dbVehicle?.Color);
         }

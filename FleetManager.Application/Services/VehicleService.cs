@@ -4,6 +4,7 @@ using FleetManager.Application.Interfaces.Services;
 using FleetManager.Application.Requests;
 using FleetManager.Application.Resources;
 using FleetManager.Domain.Entities;
+using FleetManager.Domain.Entities.Owned;
 
 namespace FleetManager.Application.Services
 {
@@ -11,9 +12,9 @@ namespace FleetManager.Application.Services
     {
         public async Task<Vehicle> Insert(CreateVehicleRequest createVehicleRequest)
         {
-            Vehicle? vehicleExists = await GetByChassisId(new GetVehicleByChassisIdRequest { ChassisId = createVehicleRequest.ChassisId });
+            Vehicle? vehicleWithChassisId = await GetByChassisId(new GetVehicleByChassisIdRequest { ChassisId = createVehicleRequest.ChassisId });
 
-            if (vehicleExists is not null)
+            if (vehicleWithChassisId is not null)
                 throw new ArgumentException(string.Format(ResponseMessages.VehicleAlreadyExistsMessage, createVehicleRequest.ChassisId.ToString()));
 
             Vehicle vehicle = _vehicleFactory.CreateVehicle(createVehicleRequest);

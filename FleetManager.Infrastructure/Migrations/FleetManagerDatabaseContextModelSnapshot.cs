@@ -24,22 +24,14 @@ namespace FleetManager.Infrastructure.Migrations
             modelBuilder.Entity("FleetManager.Domain.Entities.Vehicle", b =>
                 {
                     b.Property<string>("ChassisSeries")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ChassisNumber")
-                        .HasMaxLength(50)
-                        .HasColumnType("int");
+                    b.Property<long>("ChassisNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfPassengers")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
 
                     b.Property<int>("VehicleType")
                         .HasColumnType("int");

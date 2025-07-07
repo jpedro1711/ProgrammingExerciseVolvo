@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FleetManager.Infrastructure.Migrations
 {
     [DbContext(typeof(FleetManagerDatabaseContext))]
-    [Migration("20250704225009_Inheritance")]
-    partial class Inheritance
+    [Migration("20250707171208_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,22 +27,14 @@ namespace FleetManager.Infrastructure.Migrations
             modelBuilder.Entity("FleetManager.Domain.Entities.Vehicle", b =>
                 {
                     b.Property<string>("ChassisSeries")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ChassisNumber")
-                        .HasMaxLength(50)
-                        .HasColumnType("int");
+                    b.Property<long>("ChassisNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfPassengers")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
 
                     b.Property<int>("VehicleType")
                         .HasColumnType("int");

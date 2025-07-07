@@ -4,6 +4,7 @@ using FleetManager.Application.Interfaces.Repositories;
 using FleetManager.Application.Requests;
 using FleetManager.Application.Services;
 using FleetManager.Domain.Entities;
+using FleetManager.Domain.Entities.Owned;
 using Moq;
 
 namespace FleetManager.Application.Tests.Services

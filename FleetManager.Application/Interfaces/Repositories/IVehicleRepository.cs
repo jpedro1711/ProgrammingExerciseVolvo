@@ -1,4 +1,5 @@
 ﻿using FleetManager.Domain.Entities;
+using FleetManager.Domain.Entities.Owned;
 
 namespace FleetManager.Application.Interfaces.Repositories
 {

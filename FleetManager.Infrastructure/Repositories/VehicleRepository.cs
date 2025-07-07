@@ -1,5 +1,6 @@
 ﻿using FleetManager.Application.Interfaces.Repositories;
 using FleetManager.Domain.Entities;
+using FleetManager.Domain.Entities.Owned;
 using FleetManager.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +15,7 @@ namespace FleetManager.Infrastructure.Repositories
 
         public async Task<Vehicle?> GetByChassisId(ChassisId chassisId)
         {
-            return await _context.Vehicles.FirstOrDefaultAsync(v => v.ChassisSeries == chassisId.ChassisSeries && v.ChassisNumber == chassisId.ChassisNumber);
+            return await _context.Vehicles.SingleOrDefaultAsync(v => v.ChassisSeries == chassisId.ChassisSeries && v.ChassisNumber == chassisId.ChassisNumber);
         }
 
         public async Task<Vehicle> Insert(Vehicle vehicle)
